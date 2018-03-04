@@ -8,6 +8,8 @@
 
 namespace GMaissa\eZFixturesExtension\Core\Context;
 
+use Behat\Gherkin\Node\TableNode;
+use GMaissa\eZFixturesExtension\API\Collection\FixtureDefinition;
 use GMaissa\eZFixturesExtension\API\FixturesContextInterface;
 use GMaissa\eZFixturesExtension\Core\Service\FixturesService;
 
@@ -70,5 +72,60 @@ class FixturesContext implements FixturesContextInterface
     final public function getFixturesService()
     {
         return $this->fixturesService;
+    }
+
+    /**
+     * @Given the fixtures :fixturesFile are loaded
+     * @Given the fixtures file :fixturesFile is loaded
+     *
+     * @param string $fixturesFile Path to the fixtures
+     */
+    public function thereAreFixtures($fixturesFile)
+    {
+        $this->loadFixtures(
+            sprintf('%s/%s', $this->fixturesBaseDir, $fixturesFile)
+        );
+    }
+
+    /**
+     * @Given the following fixtures are loaded:
+     * @Given the following fixtures files are loaded:
+     *
+     * @param TableNode $fixturesFileRows Path to the fixtures
+     */
+    public function thereAreSeveralFixtures(TableNode $fixturesFileRows)
+    {
+        $fixturesFiles = [];
+        foreach ($fixturesFileRows->getRows() as $fixturesFileRow) {
+            $fixturesFiles[] = sprintf('%s/%s', $this->fixturesBaseDir, $fixturesFileRow[0]);
+        }
+        $this->loadFixtures($fixturesFiles);
+    }
+
+    /**
+     * Import fixtures
+     *
+     * @param array $paths
+     */
+    public function loadFixtures(array $paths = array())
+    {
+        $toExecute = $this->fixturesService->buildFixturesList($paths);
+        $executed = 0;
+        $skipped = 0;
+
+        /** @var FixtureDefinition $definition */
+        foreach ($toExecute as $name => $definition) {
+            // let's skip migrations that we know are invalid - user was warned and he decided to proceed anyway
+            if ($definition->status == FixtureDefinition::STATUS_INVALID) {
+                $skipped++;
+                continue;
+            }
+
+            try {
+                $this->fixturesService->executeFixture($definition);
+                $executed++;
+            } catch (\Exception $e) {
+            }
+        }
     }
 }

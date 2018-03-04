@@ -341,4 +341,24 @@ class FixturesService
 
         return $message;
     }
+
+    /**
+     * @param string[] $paths
+     *
+     * @return FixtureDefinition[]
+     */
+    public function buildFixturesList($paths)
+    {
+        $definitions = $this->getFixturesDefinitions($paths);
+
+        // filter away all migrations except 'to do' ones
+        $toExecute = array();
+        foreach ($definitions as $name => $definition) {
+            $toExecute[$name] = $this->parseFixtureDefinition($definition);
+        }
+
+        ksort($toExecute);
+
+        return $toExecute;
+    }
 }
