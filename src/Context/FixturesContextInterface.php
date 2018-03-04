@@ -6,9 +6,9 @@
  * @license   https://opensource.org/licenses/MIT The MIT License (MIT)
  */
 
-namespace GMaissa\eZFixturesExtension\API;
+namespace GMaissa\eZFixturesExtension\Context;
 
-use GMaissa\eZFixturesExtension\Core\Service\FixturesService;
+use GMaissa\eZFixturesBundle\Core\Service\FixturesService;
 
 /**
  * eZ Fixtures Contexts Interface

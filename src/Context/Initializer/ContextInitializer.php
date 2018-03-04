@@ -9,6 +9,7 @@
 namespace GMaissa\eZFixturesExtension\Core\Context\Initializer;
 
 use Behat\Behat\Context\Context;
+use Behat\Behat\Context\Initializer\ContextInitializer as BaseContextInitializer;
 use GMaissa\eZFixturesExtension\API\FixturesContextInterface;
 use GMaissa\eZFixturesExtension\Core\Service\FixturesService;
 
@@ -17,7 +18,7 @@ use GMaissa\eZFixturesExtension\Core\Service\FixturesService;
  *
  * @author Guillaume Maïssa <guillaume@maissa.fr>
  */
-class ContextInitializer
+class ContextInitializer implements BaseContextInitializer
 {
     /**
      * @var string
@@ -33,11 +34,14 @@ class ContextInitializer
      * @param FixturesService $fixturesService
      * @param string $fixturesBaseDir
      */
-    public function __construct(FixturesService $fixturesService, $fixturesBaseDir)
-    {
-        $this->fixturesService = $fixturesService;
+    public function __construct(
+        $fixturesBaseDir
+//        , FixturesService $fixturesService
+    ) {
         $this->fixturesBaseDir = $fixturesBaseDir;
+        $this->fixturesService = $fixturesService;
     }
+
     /**
      * Initializes provided context.
      *
@@ -51,8 +55,8 @@ class ContextInitializer
 
         /* @var FixturesContextInterface $context */
         if (null === $context->getFixturesBaseDir()) {
-            $context->setFixturesService($this->fixturesService);
             $context->setFixturesBaseDir($this->fixturesBaseDir);
         }
+        //$context->setFixturesService($this->fixturesService);
     }
 }

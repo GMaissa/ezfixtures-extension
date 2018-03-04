@@ -62,7 +62,7 @@ class eZFixturesExtension implements Extension
             $container->setParameter(sprintf('behat.%s.%s', $this->getConfigKey(), $key), $value);
         }
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }
 
@@ -79,24 +79,6 @@ class eZFixturesExtension implements Extension
      */
     public function process(ContainerBuilder $container)
     {
-        if ($container->has('gm_ez_fixtures.fixtures_service')) {
-            $fixturesService = $container->findDefinition('gm_ez_fixtures.fixtures_service');
-
-            $definitionParsers = $container->findTaggedServiceIds('gm_ez_fixtures.definition_parser');
-            foreach ($definitionParsers as $id => $tags) {
-                $fixturesService->addMethodCall(
-                    'addDefinitionParser',
-                    array(new Reference($id))
-                );
-            }
-
-            $executors = $container->findTaggedServiceIds('ez_migration_bundle.executor');
-            foreach ($executors as $id => $tags) {
-                $fixturesService->addMethodCall(
-                    'addExecutor',
-                    array(new Reference($id))
-                );
-            }
-        }
+        // Nothing
     }
 }

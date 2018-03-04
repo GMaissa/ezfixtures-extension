@@ -1,31 +1,11 @@
 parameters:
     gm_ez_fixtures.context.initializer.class: GMaissa\eZFixturesExtension\Core\Context\Initializer\ContextInitializer
-    gm_ez_fixtures.fixtures_service.class: GMaissa\eZFixturesExtension\Core\Service\FixturesService
-    gm_ez_fixtures.definition_loader.filesystem.class: GMaissa\eZFixturesExtension\Core\Loader\Filesystem
-    gm_ez_fixtures.definition_parser.yaml.class: GMaissa\eZFixturesExtension\Core\Parser\YamlDefinitionParser
 
 services:
     gm_ez_fixtures.context.initializer:
         class: "%gm_ez_fixtures.context.initializer.class%"
         arguments:
-            - "@gm_ez_fixtures.fixtures_service"
             - "%behat.gm_ezfixtures_extension.fixtures_base_dir%"
+            - "@gm_ez_fixtures.fixtures_service"
         tags:
            - { name: context.initializer }
-
-    gm_ez_fixtures.fixtures_service:
-        class: "%gm_ez_fixtures.fixtures_service%"
-        arguments:
-            - "@gm_ez_fixtures.definition_loader"
-            - "@ezpublish.api.repository"
-
-    gm_ez_fixtures.definition_loader:
-        alias: gm_ez_fixtures.definition_loader.filesystem
-
-    gm_ez_fixtures.definition_loader.filesystem:
-        class: "%gm_ez_fixtures.definition_loader.filesystem%"
-
-    gm_ez_fixtures.definition_parser.yaml:
-        class: "%gm_ez_fixtures.definition_parser.yaml.class%"
-        tags:
-            - { name: gm_ez_fixtures.definition_parser }

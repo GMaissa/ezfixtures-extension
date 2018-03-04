@@ -6,20 +6,26 @@
  * @license   https://opensource.org/licenses/MIT The MIT License (MIT)
  */
 
-namespace GMaissa\eZFixturesExtension\Core\Context;
+namespace GMaissa\eZFixturesExtension\Context;
 
 use Behat\Gherkin\Node\TableNode;
-use GMaissa\eZFixturesExtension\API\Collection\FixtureDefinition;
-use GMaissa\eZFixturesExtension\API\FixturesContextInterface;
-use GMaissa\eZFixturesExtension\Core\Service\FixturesService;
+use Behat\Symfony2Extension\Context\KernelAwareContext;
+use Behat\Symfony2Extension\Context\KernelDictionary;
+use GMaissa\eZFixturesBundle\API\Value\FixtureDefinition;
+use GMaissa\eZFixturesBundle\API\FixturesContextInterface;
+use GMaissa\eZFixturesBundle\Core\Service\FixturesService;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class FixturesContext
  *
  * @author Guillaume Maïssa <guillaume@maissa.fr>
  */
-class FixturesContext implements FixturesContextInterface
+class FixturesContext implements KernelAwareContext, FixturesContextInterface
 {
+    use KernelDictionary;
+
     /**
      * @var FixturesService $fixturesService
      */
@@ -47,6 +53,17 @@ class FixturesContext implements FixturesContextInterface
 
         return $this;
     }
+
+    public function setKernel(KernelInterface $kernel)
+    {
+        $this->kernel = $kernel;
+        /* @var Container $container */
+        $container = $kernel->getContainer();
+        $fixturesService = $container->get('gm.ez_fixtures.fixtures_service');
+
+        $this->setFixturesService($fixturesService);
+    }
+
 
     /**
      * {@inheritdoc}
@@ -83,7 +100,7 @@ class FixturesContext implements FixturesContextInterface
     public function thereAreFixtures($fixturesFile)
     {
         $this->loadFixtures(
-            sprintf('%s/%s', $this->fixturesBaseDir, $fixturesFile)
+            array(sprintf('%s/%s', $this->fixturesBaseDir, $fixturesFile))
         );
     }
 
@@ -121,11 +138,11 @@ class FixturesContext implements FixturesContextInterface
                 continue;
             }
 
-            try {
+//            try {
                 $this->fixturesService->executeFixture($definition);
                 $executed++;
-            } catch (\Exception $e) {
-            }
+//            } catch (\Exception $e) {
+//            }
         }
     }
 }
