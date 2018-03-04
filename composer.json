@@ -1,0 +1,26 @@
+{
+    "name": "gmaissa/ezfixtures-extension",
+    "description": "Behat extension to load fixtures files using Kaliop eZ-Migration Bundle",
+    "type": "behat-extension",
+    "license": "MIT",
+    "keywords": ["Behat", "Context", "Extension", "eZ publish", "Fixtures", "eZMigrationBundle"],
+    "authors": [
+        {
+            "name": "Guillaume Maïssa",
+            "email": "guillaume@maissa.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"GMaissa\\eZFixturesExtension\\": "src/"}
+    },
+    "require": {
+        "behat/behat": "~3.0",
+        "behat/symfony2-extension": "~2.0",
+        "kaliop/ezmigrationbundle": "~4.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^2.0",
+        "phpmd/phpmd": "^2.0",
+        "sebastian/phpcpd": "^2.0"
+    }
+}
