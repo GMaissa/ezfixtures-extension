@@ -10,13 +10,17 @@
             "email": "guillaume@maissa.fr"
         }
     ],
+    "repositories": [
+        {"type": "vcs", "url": "https://github.com/GMaissa/ezfixtures-bundle.git"}
+    ],
     "autoload": {
         "psr-4": {"GMaissa\\eZFixturesExtension\\": "src/"}
     },
     "require": {
         "behat/behat": "~3.0",
         "behat/symfony2-extension": "~2.0",
-        "kaliop/ezmigrationbundle": "~4.0"
+        "kaliop/ezmigrationbundle": "~4.0",
+        "gmaissa/ezfixtures-bundle": "dev-master"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.0",
