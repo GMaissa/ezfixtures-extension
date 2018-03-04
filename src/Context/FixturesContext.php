@@ -12,7 +12,7 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 use GMaissa\eZFixturesBundle\API\Value\FixtureDefinition;
-use GMaissa\eZFixturesBundle\API\FixturesContextInterface;
+use GMaissa\eZFixturesExtension\Context\FixturesContextInterface;
 use GMaissa\eZFixturesBundle\Core\Service\FixturesService;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -59,7 +59,7 @@ class FixturesContext implements KernelAwareContext, FixturesContextInterface
         $this->kernel = $kernel;
         /* @var Container $container */
         $container = $kernel->getContainer();
-        $fixturesService = $container->get('gm.ez_fixtures.fixtures_service');
+        $fixturesService = $container->get('gm.ez_fixtures_bundle.fixtures_service');
 
         $this->setFixturesService($fixturesService);
     }

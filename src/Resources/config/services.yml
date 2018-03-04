@@ -1,11 +1,10 @@
 parameters:
-    gm_ez_fixtures.context.initializer.class: GMaissa\eZFixturesExtension\Core\Context\Initializer\ContextInitializer
+    gm_ez_fixtures.context.initializer.class: GMaissa\eZFixturesExtension\Context\Initializer\ContextInitializer
 
 services:
     gm_ez_fixtures.context.initializer:
         class: "%gm_ez_fixtures.context.initializer.class%"
         arguments:
             - "%behat.gm_ezfixtures_extension.fixtures_base_dir%"
-            - "@gm_ez_fixtures.fixtures_service"
         tags:
            - { name: context.initializer }

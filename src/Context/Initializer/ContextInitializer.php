@@ -6,7 +6,7 @@
  * @license   https://opensource.org/licenses/MIT The MIT License (MIT)
  */
 
-namespace GMaissa\eZFixturesExtension\Core\Context\Initializer;
+namespace GMaissa\eZFixturesExtension\Context\Initializer;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer as BaseContextInitializer;
@@ -39,7 +39,7 @@ class ContextInitializer implements BaseContextInitializer
 //        , FixturesService $fixturesService
     ) {
         $this->fixturesBaseDir = $fixturesBaseDir;
-        $this->fixturesService = $fixturesService;
+//        $this->fixturesService = $fixturesService;
     }
 
     /**

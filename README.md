@@ -40,10 +40,10 @@ Enable the context:
         suites:
             default:
                 contexts:
-                - GMaissa\eZFixturesExtension\Core\Context\FixturesContext
+                - GMaissa\eZFixturesExtension\Context\FixturesContext
 
                 # or if you want to set the base path only for this context:
-                - GMaissa\eZFixturesExtension\Core\Context\FixturesContext:
+                - GMaissa\eZFixturesExtension\Context\FixturesContext:
                     fixturesBaseDir: %paths.base%/tests/Features/fixtures/ORM (default value)
 
 ## Contributing
